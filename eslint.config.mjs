@@ -1,6 +1,9 @@
 import globals from 'globals';
 import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
+import eslintPlugin from '@typescript-eslint/eslint-plugin';
+import eslintParser from '@typescript-eslint/parser';
+
 
 export default [
   {
@@ -19,8 +22,6 @@ export default [
       'no-console': 'warn',
       'no-undef': 'error',
     },
-    parser: '@typescript-eslint/parser',
-    plugins: ['@typescript-eslint'],
   },
 
   pluginJs.configs.recommended,
