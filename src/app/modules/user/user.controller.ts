@@ -7,8 +7,7 @@ import { UserServices } from './user.service';
 //1. POST controller
 const createStudent = catchAsync(async (req, res) => {
   const { password, student: studentData } = req.body;
-  //zod validation start
-  // const zodparseData = studentValidationSchema.parse(studentData);
+  
   const result = await UserServices.createStudentIntoDB(password, studentData);
   //zod validation end
 
