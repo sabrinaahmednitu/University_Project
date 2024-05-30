@@ -13,12 +13,13 @@
   | 'November'
   | 'December';
 
-
+export type AcademicSemesterName = 'Autumn' | 'Summer' | 'Fail';
+export type AcademicSemesterCode = '01' | '02' | '03';
 
 
 export type AcademicSemester = {
-  name: 'Autumn' | 'Summer' | 'Fail';
-  code: '01' | '02' | '03';
+  name: AcademicSemesterName;
+  code: AcademicSemesterCode;
   year: Date;
   startMonth: Months;
   endMonth: Months;

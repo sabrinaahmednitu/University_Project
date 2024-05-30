@@ -1,31 +1,22 @@
-import { string } from 'joi';
 import { model, Schema } from 'mongoose';
-import { AcademicSemester, Months } from './academicSemester.interface';
-
-const months: Months[] = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
+import {
+  academicSemesterCode,
+  academicSemesterName,
+  months,
+} from './academicSemester.constant';
+import { AcademicSemester } from './academicSemester.interface';
 
 const academicSemesterSchema = new Schema<AcademicSemester>(
   {
     name: {
       type: String,
       required: true,
+      enum: academicSemesterName,
     },
     code: {
       type: String,
       required: true,
+      enum: academicSemesterCode,
     },
     year: {
       type: Date,
@@ -33,10 +24,12 @@ const academicSemesterSchema = new Schema<AcademicSemester>(
     },
     startMonth: {
       type: String,
+      required: true,
       enum: months,
     },
     endMonth: {
       type: String,
+      required: true,
       enum: months,
     },
   },
