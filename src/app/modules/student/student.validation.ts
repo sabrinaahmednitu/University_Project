@@ -20,7 +20,7 @@ const userNameValidationSchema = z.object({
       message: 'First Name must start with a Capital letter',
     }),
   middleName: z.string(),
-  lastName: z.string().min(1).trim(),
+  lastName: z.string(),
 });
 
 // LocalGuardian schema
@@ -35,6 +35,7 @@ const localGuardianValidationSchema = z.object({
 export const CreateStudentValidationSchema = z.object({
   body: z.object({
     password: z.string().max(20),
+    //student name e object e aigulo pathaite hobe
     student: z.object({
       name: userNameValidationSchema,
       gender: z.enum(['male', 'female', 'other']),
