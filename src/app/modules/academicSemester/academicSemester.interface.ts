@@ -1,5 +1,5 @@
 
- type Month =
+ export type Months =
   | 'January'
   | 'February'
   | 'March'
@@ -20,6 +20,6 @@ export type AcademicSemester = {
   name: 'Autumn' | 'Summer' | 'Fail';
   code: '01' | '02' | '03';
   year: Date;
-  startMonth: Month;
-  endMonth: Month;
+  startMonth: Months;
+  endMonth: Months;
 };
