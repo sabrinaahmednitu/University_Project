@@ -21,7 +21,7 @@ router.get(
 );
 //4. (findOneAndUpdate) update single semester by id
 router.patch(
-  '/:semesterId',
+  '/:semesterId',validateRequest(AcademicSemesterValidations.updateAcademicSemesterValidationSchema),
   AcademicSemesterControllers.updateAcademicSemester
 );
 export const AcademicSemesterRoutes = router;
