@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose';
-import validator from 'validator';
 import {
   Guardian,
   LocalGuardian,
@@ -109,6 +108,10 @@ const studentSchema = new Schema<Student>({
     required: [true, 'Local guardian information is required'],
   },
   profileImg: { type: String },
+  admissionSemester: {
+    type: Schema.Types.ObjectId,
+     ref:'AcademicSemester',
+  },
   isDeleted: {
     type: Boolean,
     default: false,
