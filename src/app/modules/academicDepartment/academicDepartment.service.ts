@@ -10,15 +10,17 @@ const getAllAcademicDepartmentFromDB = async () => {
   const result = await AcademicDepartmentModel.find();
   return result;
 };
+
 const getSingleAcademicDepartmentFromDB = async (id: string) => {
   const result = await AcademicDepartmentModel.findById(id);
   return result;
 };
+
 const updateAcademicDepartmentIntoDB = async (
   id: string,
   payload: Partial<TAcademicDepartment>
 ) => {
-  const result = await AcademicDepartmentModel.findOneAndUpdate(
+  const result = await AcademicDepartmentModel.findByIdAndUpdate(
     { _id: id },
     payload,
     {
