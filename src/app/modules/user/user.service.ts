@@ -1,4 +1,7 @@
+import httpStatus from 'http-status';
+import mongoose from 'mongoose';
 import config from '../../config';
+import AppError from '../../errors/AppError';
 import { AcademicSemester } from '../academicSemester/academicSemester.interface';
 import { AcademicSemesterModel } from '../academicSemester/academicSemester.model';
 import { Student } from '../student/student.interface';
@@ -16,30 +19,43 @@ const createStudentIntoDB = async (password: string, payload: Student) => {
   //set student role
   userData.role = 'student';
 
-
-
-
-
   //find academic semestter info
-  const admissionSemester=await AcademicSemesterModel.findById(payload.admissionSemester)
+  const admissionSemester = await AcademicSemesterModel.findById(payload.admissionSemester)
+  
 
-  userData.id = await generateStudentId(admissionSemester);
 
-  //create a user
-  const newUser = await UserModel.create(userData);
+  //transaction and callback
+  //isolated environment start
+  const session = await mongoose.startSession();
+  try {
+    session.startTransaction();
+    //set generated id
+    userData.id = await generateStudentId(admissionSemester);
 
-  //create a student
-  if (Object.keys(newUser).length) {
+    //create a user(transaction-1) as array
+    const newUser = await UserModel.create([userData], { session });
+
+    //create a student
+    if (!newUser.length) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'Faild to create user')
+    }
     ///set id , _id as user
-    payload.id = newUser.id; //embedding id
-    payload.user = newUser._id; //ref _id
+    payload.id = newUser[0].id; //embedding id
+    payload.user = newUser[0]._id; //ref _id
+    //create a student(transaction-2) as array
+    const newStudent = await StudentModel.create([payload], { session });
+    if (!newStudent.length) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'Faild to create new student')
+    }
 
-    const newStudent = await StudentModel.create(payload);
+    await session.commitTransaction();
+    await session.endSession();
     return newStudent;
+  } catch (err) {
+    await session.abortTransaction();
+    await session.endSession();
   }
-
-  return newUser;
-};
+}
 
 export const UserServices = {
   createStudentIntoDB,
