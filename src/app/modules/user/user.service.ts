@@ -2,7 +2,6 @@ import httpStatus from 'http-status';
 import mongoose from 'mongoose';
 import config from '../../config';
 import AppError from '../../errors/AppError';
-import { AcademicSemester } from '../academicSemester/academicSemester.interface';
 import { AcademicSemesterModel } from '../academicSemester/academicSemester.model';
 import { Student } from '../student/student.interface';
 import { StudentModel } from '../student/student.model';
@@ -51,6 +50,7 @@ const createStudentIntoDB = async (password: string, payload: Student) => {
     await session.commitTransaction();
     await session.endSession();
     return newStudent;
+    
   } catch (err) {
     await session.abortTransaction();
     await session.endSession();
