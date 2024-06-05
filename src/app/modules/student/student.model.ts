@@ -1,3 +1,4 @@
+import { academicSemesterCode } from './../academicSemester/academicSemester.constant';
 import { Schema, model } from 'mongoose';
 import {
   Guardian,
@@ -111,6 +112,10 @@ const studentSchema = new Schema<Student>({
   admissionSemester: {
     type: Schema.Types.ObjectId,
     ref: 'AcademicSemester',
+  },
+  academicDepartment: {
+    type: Schema.Types.ObjectId,
+    ref: 'AcademicDepartment',
   },
   isDeleted: {
     type: Boolean,

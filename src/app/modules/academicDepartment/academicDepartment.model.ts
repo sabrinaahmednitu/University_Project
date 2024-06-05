@@ -1,4 +1,6 @@
+import httpStatus from 'http-status';
 import { model, Schema } from 'mongoose';
+import AppError from '../../errors/AppError';
 import { TAcademicDepartment } from './academicDepartment.interface';
 
 const academicDepartmentSchema = new Schema<TAcademicDepartment>(
@@ -18,13 +20,14 @@ const academicDepartmentSchema = new Schema<TAcademicDepartment>(
   }
 );
 
+
 //department name duplicate hobena
 academicDepartmentSchema.pre('save', async function (next) {
   const isDepartmentExists = await AcademicDepartmentModel.findOne({
     name: this.name,
   });
   if (isDepartmentExists) {
-    throw new Error('This department is already esists!');
+    throw new AppError(httpStatus.NOT_FOUND,'This department is already esists!');
   }
   next();
 })
@@ -34,7 +37,7 @@ academicDepartmentSchema.pre('findOneAndUpdate', async function (next) {
   const query = this.getQuery();
  const isDepartmentExists = await AcademicDepartmentModel.findOne(query);
    if (!isDepartmentExists) {
-     throw new Error('This department does not esists!');
+     throw new AppError(httpStatus.NOT_FOUND,'This department does not esists!');
    }
    next();
 });
