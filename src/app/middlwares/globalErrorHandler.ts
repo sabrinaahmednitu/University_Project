@@ -10,7 +10,7 @@ import { TErrorSources } from '../interface/error';
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   //setting default value
-  let statusCode =  500;
+  let statusCode = 500;
   let message = 'something went wrong!';
 
   //default konokichu na mille ai pathabe
@@ -56,8 +56,8 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     errorSources = [
       {
         path: '',
-        message:err?.message
-      }
+        message: err?.message,
+      },
     ];
   }
   //customized Error solve
@@ -66,13 +66,10 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     errorSources = [
       {
         path: '',
-        message:err?.message
-      }
+        message: err?.message,
+      },
     ];
   }
-
-
-
 
   //ultimate return
   return res.status(statusCode).json({
