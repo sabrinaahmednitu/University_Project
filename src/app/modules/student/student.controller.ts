@@ -6,7 +6,8 @@ import { StudentServices } from './student.service';
 
 // GET controller
 const getAllStudents = catchAsync(async (req, res) => {
-  const result = await StudentServices.getAllStudentsFromDB();
+  //console.log(req.query){ searchTerm: 'rav' }
+  const result = await StudentServices.getAllStudentsFromDB(req.query);
   //send get response
   sendResponse(res, {
     statusCode: httpStatus.OK,
