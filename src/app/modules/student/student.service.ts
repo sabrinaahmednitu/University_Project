@@ -7,38 +7,38 @@ import { Student } from './student.interface';
 
 // GET
 const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
-  const queryObj = { ...query }; //searchTerm bad e sob thakbe
+  //const queryObj = { ...query }; //searchTerm bad e sob thakbe
 
   //serach based on query
   //{ email: { $regex: query.searchTerm, $options: i } }
   //{ presentAddress: { $regex: query.searchTerm, $options: i } }
 
-  const studentSearchableFields = ['email', 'name.firstName', 'presentAddress'];
-  let searchTerm = '';
-  if (query?.searchTerm) {
-    searchTerm = query?.searchTerm as string;
-  }
-  const searchQuery = StudentModel.find({
-    $or: studentSearchableFields.map((field) => ({
-      [field]: { $regex: searchTerm, $options: 'i' },
-    })),
-  });
+  // const studentSearchableFields = ['email', 'name.firstName', 'presentAddress'];
+  // let searchTerm = '';
+  // if (query?.searchTerm) {
+  //   searchTerm = query?.searchTerm as string;
+  // }
+  // const searchQuery = StudentModel.find({
+  //   $or: studentSearchableFields.map((field) => ({
+  //     [field]: { $regex: searchTerm, $options: 'i' },
+  //   })),
+  // });
 
   //filtering
-  const excludeFields = ['searchTerm', 'sort', 'limit', 'page', 'fields'];
-  excludeFields.forEach((el) => delete queryObj[el]);
-  console.log({ query }, { queryObj });
+  // const excludeFields = ['searchTerm', 'sort', 'limit', 'page', 'fields'];
+  // excludeFields.forEach((el) => delete queryObj[el]);
+  // console.log({ query }, { queryObj });
   //  console.log({query,queryObj})
 
-  const filterQuery = searchQuery
-    .find(queryObj)
-    .populate('admissionSemester')
-    .populate({
-      path: 'academicDepartment',
-      populate: {
-        path: 'academicFaculty',
-      },
-    });
+  // const filterQuery = searchQuery
+  //   .find(queryObj)
+  //   .populate('admissionSemester')
+  //   .populate({
+  //     path: 'academicDepartment',
+  //     populate: {
+  //       path: 'academicFaculty',
+  //     },
+  //   });
 
   //sorting
   let sort = '-createdAt';
